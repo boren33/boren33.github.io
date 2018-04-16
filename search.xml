@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+    
+    <entry>
+      <title>Linux常用命令</title>
+      <link href="/2018/04/06/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"/>
+      <url>/2018/04/06/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+      <content type="html"><![CDATA[<p>sdf </p>]]></content>
+      
+      
+    </entry>
+    
+    <entry>
+      <title>rpc简介</title>
+      <link href="/2018/04/06/rpc%E7%AE%80%E4%BB%8B/"/>
+      <url>/2018/04/06/rpc%E7%AE%80%E4%BB%8B/</url>
+      <content type="html"><![CDATA[]]></content>
+      
+      
+        <tags>
+            
+            <tag> rpc </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>排序算法总结</title>
+      <link href="/2018/04/06/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/"/>
+      <url>/2018/04/06/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/</url>
+      <content type="html"><![CDATA[<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;排序,顾名思义,将数据按照某种规则排列起来.这种规则可以是根据基本的数值大小排序,也可以是通过字符串长度比较来排序,又或者是优先根据两个字符串的第一个不同值为参考来比较的排序(String的compareTo默认方法),而这个规则可以是各式各样的,你可以根据义务来自己定制排序策略,今天我们主要探讨数据结构与算法中8中基本的排序算法(全部根据数值大小比较)</p>]]></content>
+      
+      <categories>
+          
+          <category> 技术 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> algorithm </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
+      <title>人生传</title>
+      <link href="/2018/04/06/%E4%BA%BA%E7%94%9F%E4%BC%A0/"/>
+      <url>/2018/04/06/%E4%BA%BA%E7%94%9F%E4%BC%A0/</url>
+      <content type="html"><![CDATA[<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>  如果人生是一场炼狱,那我们何去何从<br>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;—&lt;&lt;魔也,道也&gt;&gt;</p><h2 id="出入尘世-天真无邪"><a href="#出入尘世-天真无邪" class="headerlink" title="出入尘世,天真无邪"></a>出入尘世,天真无邪</h2><p>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;童年的我特别乖,有一次奶奶的救心丸找不到了,斥责我是不是偷去玩了,自己死活不肯承认,后来看她越来越急,就说”别找了,本少爷玩丢了”,然后就是一顿毒打….过了几天,救心丸出现在了奶奶的药盒.<br>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;小时候,村里就一个老师,同时教幼儿园到小学3年级,作为当代最小屁孩,我跟着大屁孩们一起上课,当时自己总是喜欢研究一些数学”怪题”,结局也都不错,但是特别讨厌学语文,可惜不背课文不让吃饭,于是我就特别认真的背,记得当时把几本书从头到尾背完,接着反着背,因此拿到5块钱巨款作为零花钱.</p><h2 id="无关对错-只为快乐"><a href="#无关对错-只为快乐" class="headerlink" title="无关对错,只为快乐"></a>无关对错,只为快乐</h2><p>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;过去10-15年,大多数中国农村家庭十分贫穷,我家也不例外,曾经的梦想是拥有一台电脑,玩一辈子问道.还记得以前经常饿肚子,但是一玩游戏或者想象自己在玩游戏,就变得精神抖擞,这一直持续了七年,在很多人眼里这是荒废,不务正业,但它确实是一生中最纯净的时光,这就是信仰的力量吧.直到读了乔布斯传,身体的血液开始燃烧,觉得我应该改变自己,于是开始好好学习</p><h2 id="悔恨犹在-何去何从"><a href="#悔恨犹在-何去何从" class="headerlink" title="悔恨犹在,何去何从"></a>悔恨犹在,何去何从</h2><p>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我的高中很不快乐,经常一个人在操场散步,或者回到教室装睡,然后沉思,时间长了,变本加厉,总是处于对过去的不满和自身的懊悔中,我从不惧怕未来,却不能接受过去,越是走不出来,浪费越多时间,时间越长,自责更深,恶性循环,此时我已从当年反应敏捷的儿童变成略有迟钝的少年.这些事情让人如此痛苦,以至于我不得不”先解决心情,再解决事情”.我找了大量心理学书,结果根本没耐心看,全理论知识,仿佛是一本本教科书.废话连篇.直到后来慢慢明白痛苦是正常的,一个人承受越大的痛苦,未来可以抗住越大的打击.,相反一个没有过痛苦和思考的人,他的一生得多普通啊?</p><h2 id="如梦初醒-大步朝前"><a href="#如梦初醒-大步朝前" class="headerlink" title="如梦初醒,大步朝前"></a>如梦初醒,大步朝前</h2><p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;黑暗光明,黑暗光明,黑暗光明,惶惶中6年时间过去,已不再是当初的少年,这时更清楚自己想成为什么样的人,我开始朝着自己的梦想(兼具艺术和技术的优秀工程师)逐步努力.此时已是大二下学期.每天不去上课,沉迷于图书馆,看着妹子,刷着一道道算法题,每次accept,都触动着内心,看编译原理时,也总是惊呼原来如此,学习计网时,从一开始的认为理所当然到知其所以然都是一种兴奋,研读jdk源码时,从一开始的懵逼到初为了解,再到懵逼,再到了解..不得不感叹大佬的智慧.终于结果是美丽的,春招拿到一些互联网公司offer,最后去了小米科技(Mi fan),做push服务端开发</p><h2 id="面朝大海-春暖花开"><a href="#面朝大海-春暖花开" class="headerlink" title="面朝大海,春暖花开"></a>面朝大海,春暖花开</h2><p>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一花一世界，一叶一如来.这个世界无所谓缺陷，即使是缺陷，也是美的.让我们朝着梦想前进</p>]]></content>
+      
+      <categories>
+          
+          <category> 生活 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 随笔 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+  
+  
+</search>
