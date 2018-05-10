@@ -5,6 +5,15 @@
  * @version 2.0
  * @link http://chopstack.com
  */
+.post-copyright {
+  margin: 2em 0 0;
+  padding: 0.5em 1em;
+  border-left: 3px solid #FF1700;
+  background-color: #F9F9F9;
+  list-style: none; }
+  .post-copyright li {
+    margin: 8px 0; }
+
 /*
 pure css setting
 When setting the primary font stack, apply it to the Pure grid units along
