@@ -1,0 +1,9 @@
+http://www.boren33.com/HDFS高可用性介绍.html
+http://www.boren33.com/NameNode主备切换.html
+http://www.boren33.com/新梦想.html
+http://www.boren33.com/简聊JAVA-NIO.html
+http://www.boren33.com/给过去的一封信.html
+http://www.boren33.com/遇见美丽.html
+http://www.boren33.com/向左乐观,向右悲观.html
+http://www.boren33.com/排序算法总结.html
+http://www.boren33.com/人生传.html
