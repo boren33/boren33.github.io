@@ -1,0 +1,86 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="boren-blog"><meta name="google-site-verification" content="fryltS8PSc2rvFQlYnglOzO2vhDeJPrOxcFoDFYwqa0"><title>Kafka介绍 | boren's blog</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/8.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Kafka介绍</h1><a id="logo" href="/.">boren's blog</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 所有文章</i></a><a href="/about/"><i class="fa fa-user"> 关于作者</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Kafka介绍</h1><div class="post-meta">Sep 5, 2018<span> | </span><span class="category"><a href="/categories/技术人生/">技术人生</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span></div><div class="post-content"><h3><span id="描述一">描述一</span></h3><p>Kafka是一个分布式的流处理平台。一个流处理平台通常有以下特征</p>
+<ol>
+<li>发布和订阅消息流（类似于消息队列或者企业级的消息系统）</li>
+<li>以容错的、持久的方式存储消息流</li>
+<li>当消息流到来的时候，处理消息<a id="more"></a>
+<h3><span id="描述二">描述二</span></h3>Kafka是一个分布式、分区的、多副本的、多订阅者，基于zookeeper协调的分布式日志系统，其主要特点为：</li>
+<li>以时间复杂度为O(1)的方式提供消息持久化能力，即使对TB级以上数据也能保证常数时间的访问性能</li>
+<li>高吞吐率。即使在非常廉价的商用机器上也能做到单机支持每秒100K条消息的传输</li>
+<li>支持Kafka Server间的消息分区，及分布式消费，同时保证每个partition内的消息顺序传输</li>
+<li>同时支持离线数据处理和实时数据处理</li>
+</ol>
+<h2><span id="应用场景">应用场景</span></h2><ol>
+<li>数据推送</li>
+<li>作为大缓冲区使用</li>
+<li>日志收集（scribe或者nginx）</li>
+<li>服务中间件</li>
+</ol>
+<h2><span id="kafka架构">Kafka架构</span></h2><p><img src="/kafka介绍/kafka-architecture.png" alt="kafka架构"></p>
+<h4><span id="topic">Topic</span></h4><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;消息的类别。Kafka中可以将Topic从物理上划分成一个或多个分区（Partition），每个分区在物理上对应一个文件夹，以”topicName_partitionIndex”的命名方式命名，该dir包含了这个分区的所有消息(.log)和索引文件(.index)，这使得Kafka的吞吐率可以水平扩展。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;producer在发布消息的时候，可以为每条消息指定Key，这样消息被发送到broker时，会根据分区算法把消息存储到对应的分区中（一个分区存储多个消息），如果分区规则设置的合理，那么所有的消息将会被均匀的分布到不同的分区中，这样就实现了负载均衡。</p>
+<h4><span id="broker">Broker</span></h4><p>代理，用来存储消息，Kafka集群中的每一个服务器都是一个代理（Broker），消费者将从broker拉取订阅的消息</p>
+<h4><span id="producer">Producer</span></h4><p>向Kafa发送消息的进程，生产者会根据topic分布消息。生产者也负责把消息关联到Topic上的哪一个分区。最简单的方式从分区列表中轮流选择。也可以根据某种算法依照权重选择分区。算法由开发者定义。</p>
+<h4><span id="cousumer">Cousumer</span></h4><p>Consermer实例可以是独立的进程，负责订阅和消费消息。消费者用consumerGroup来标识自己。同一个消费组可以并发地消费多个分区的消息，同一个partition也可以由多个consumerGroup并发消费，但是在consumerGroup中一个partition只能由一个consumer消费</p>
+<h4><span id="cousumergroup">CousumerGroup</span></h4><p>Consumer Group：同一个Consumer Group中的Consumers，Kafka将相应Topic中的每个消息只发送给其中一个Consumer</p>
+<h2><span id="kafka详解">Kafka详解</span></h2><h3><span id="主题和分区topics-and-partitions">主题和分区（Topics and partitions）</span></h3><p>对于每个topic，Kafka都用分区的的方法维护（如下图）</p>
+<p><img src="https://kafka.apache.org/20/images/log_anatomy.png" alt="screenshot"></p>
+<h4><span id="partition">Partition</span></h4><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;对Topic中的消息做水平切分，每块称为一个Partition。每个分区都是一个 顺序的、不可变的消息队列， 并且可以持续的添加;分区中的消息都被分了一个序列号，称之为偏移量(offset)，在每个分区中此偏移量都是唯一的。</p>
+<h4><span id="消费序列">消费序列</span></h4><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;无论消息是否被消费了，Kafka集群都会保存所有的消息，直到它们过期 。比如我们配置一个消息的有效期为两天，那么消息发布的两天内，consumer可以消费消息，而超出时间后，消息将被丢弃以释放空间。那么Kafa怎么知道消费到哪儿了呢？每个消费者都维护着一个元数据（偏移量，消费者的消费进度)。这个offset由消费者控制：当consumer消费消息的时候，偏移量也线性地增加。但是偏移量由消费者控制，所以消费者能够把偏移量重置为一个更老的，以便重新读取。此外，由于偏移量由消费者控制offset， 一个消费者的操作不会影响其它消费者对此log的处理。 </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这些特点使得Kafka消费者的成本很低，他们可以来取自如的消费消息，而且不影响其他消费者，这样，我们可以用tail命令处理任何topic，而不需要改变这些消息。再说说分区。Kafka中采用分区的设计有以下好处。一是可以水平扩展，不受单台服务器的限制；Topic拥有多个分区意味着它可以不受限的处理更多的数据。第二，分区可以作为并行处理的单元，稍后会谈到这一点。</p>
+<h3><span id="分布式">分布式</span></h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;log的分区被分散的存储在Kafka集群中，每个服务器只处理分配到它机器上的partitions。此外，partation会根据配置备份到其他server以实现容错性。每个分区，只有一个server可以作为partation Leader，其他的都将作为follower。leader负责处理partation的读写请求，followers被动的同步数据，以便在leader挂掉的时候，升级为leader。需要知道的是，每个server都是一些分区的leader，同事又是其他分区的flowwer，以更好地实现负载均衡，避免热点问题。</p>
+<h3><span id="异地同步">异地同步</span></h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kafka MirrorMaker为群集提供<code>geo-replication</code>支持。借助<code>MirrorMaker</code>，消息可以跨多个数据中心或云区域进行复制、同步。 我们可以利用它在active/passive场景中备份和恢复; 或者在active/passive方案中将数据置于更接近用户的位置，或数据本地化。  </p>
+<h3><span id="保证">保证</span></h3><ol>
+<li>消息将会以被sent的顺序添加到partition Log中</li>
+<li>消费者将先看到先加入到partition Log中的消息</li>
+<li>对于一个topic的消息，如果备份数为N，系统最多容许有N-1台失败，而不丢失commit到log的消息</li>
+</ol>
+<h2><span id="kafka的优点">Kafka的优点</span></h2><h3><span id="kafka作为一个消息系统">Kafka作为一个消息系统</span></h3><p>与传统的企业级消息系统相比，Kafka如何？</p>
+<p>传统的消息系统有两种模型：</p>
+<ul>
+<li>队列模型：一组消费者去消费server上的消息，但是一个消息只能被一个consumer消费</li>
+<li>发布-订阅模型： 每个消息都会广播到每个消费者，即每个消费者都会消费</li>
+</ul>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;队列模型让多个consumer瓜分消息并消费，这样可以很好地水平扩展，提高性能，但和队列模型不同的是，消息一旦被读取就会被干掉，因此有丢数据的风险；发布订阅模型会把每个消息都广播给订阅者，因为不方便做水平扩展。</p>
+<ol>
+<li><strong>Kafka同时具备队列模型和发布-订阅模型，你不必纠结于消息系统模型的二选一</strong></li>
+</ol>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kafka的 consumerGroup结合上这两中模型：队列模型-同一group中，一个messgae只有一个consumer消费，消息多的时候，往group中添加consumer就好，容易扩展；发布订阅模型：同一个消息可以被广播到不同的consumerGroup中。</p>
+<ol start="2">
+<li><strong>kafka有更强的顺序保证机制</strong></li>
+</ol>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;传统的消息队列按序保存消息，如果有多个消费者从队列消费消息，server将会按照顺序把消息移出队列，不幸的是，即使server顺序移出消息，但是消息到达consumers的过程是异步的，所以他们真正抵达消费者的顺序与stored进队列时不同，消息系统的解决方案是只让一个consumer去消费这个队列，然而这又违背了并发。</p>
+<p>这方面，Kafka做的更好，通过分区概念，在一个topic下，Kafka能同时满足</p>
+<ul>
+<li><p>顺序保证：同一个partition的消息只能由group中的一个consumer消费</p>
+</li>
+<li><p>负载均衡：由于有多个partition，所以仍然具有并发性</p>
+</li>
+</ul>
+<p><strong>需要注意的是，group中的consumer数不能大于partition，否则会造成空闲</strong></p>
+<h3><span id="kafka作为一个存储系统">Kafka作为一个存储系统</span></h3><p>任何允许把发布消息和消费消息过程解耦的消息队列，本质上都充当了存储系统，不同的是，Kafka是一个高性能的存储系统：</p>
+<ul>
+<li>写到kafka的数据会被写到硬盘，并且备份，以实现容错。Kafka允许生产者等待消息应答，直到完成备份，保证持久化了。</li>
+<li>Kafka的硬盘结构可以水平扩展，无论你的server是50K还是50T，都可以很好的执行</li>
+</ul>
+<p>由于重视存储并且允许client去控制读取位置，你还可以认为kafka是一种具备高性能，低延迟，提交日志存储，复制，和传播特性的分布式文件系统</p>
+<h3><span id="kafka流处理">Kafka流处理</span></h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;不只是读写和存储数据，Kafka的目标是能够实时流处理。在kafka中，流处理持续获取<code>输入topic</code>的数据，进行处理加工，然后写入<code>输出topic</code>。例如，一个零售APP，接收销售和出货的<code>输入流</code>，统计数量或调整价格后输出。</p>
+<h3><span id="批处理">批处理</span></h3><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;把消息、存储、流处理组合在一起似乎并不常见，但对于Kafka来说是非常有必要的，因为它的目标是做一个流平台。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;类似于HDFS的分布式文件系统允许存储静态文件来进行批处理。这种系统能够有效地存储和处理历史数据; 传统的消息系统允许你处理订阅topic之后才到达的topic消息。Kafka结合了这两种能力，这种组合对于kafka作为流处理应用的平台和流数据管道的平台是至关重要的。 </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;作为流式应用程序，Kafka通过组合存储和低延迟订阅，可用相同的方式处理过去和未来的数据。 这意味着一个单一的应用程序可以处理历史记录的数据，并且在到达最后一条记录时不用结束，而是等待future data。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;作为流数据管道，Kafka能够订阅实时事件，因此Kafka可作为低延迟的管道; 同时Kafka可靠存储数据的特性使得它能够存储一些要求较高的数据(保证安全送达or系统因维护下线一段时间也不会丢数据）。</p>
+<p>本文主要翻译自：<a href="https://kafka.apache.org/intro" target="_blank" rel="noopener">https://kafka.apache.org/intro</a></p>
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a class="article-share-link" data-url="http://www.boren33.com/Kafka介绍.html" data-id="cjlorepnt0001aqv25zuyxcvn" data-qrcode="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAAByUlEQVR42u3aS44DIQwFwL7/pTPbkaIm70HDRKNi1coHF1lYtsl1xes1XL8/8/483u3asXBxcZe5OWUc5v31ux3G736IhYuLe5A7Dt+Gyd/NDbi4uN/Mzb+bHAMXF/d/cMclSN7Y4OLifj83L0fykEk7tLFXw8XFXeDmU8p9z1vmu7i4uFPcV7lWjjQuhqLouLi4R7h5QmkLoPziJI+Li4t7kruCy9PTSiVzPfVb4uLiBty2oFn/W8bcWCSqyHBxcQ9y26SWlzv5Pri4uCe5c1cj7YCjHYIUzQ8uLu4GblLKtCfOxx/1xS0uLu4Rbju+TILl45K8hLodjuDi4m7jtleneZprg+VXNbi4uPu47db5wPTuGMV49K75wcXF3cxtt25bprztKRokXFzcg9yVlmMOmqe/D70aLi7uNm6OGLc9Oau9lMXFxT3PnUwrcZg8OX74DC4u7mbuq1z5tHWuWZqspHBxcR/ltleq6+XOypFwcXFPcueSV1LKPNsC4eLinue2iSanrGTQemCKi4v7R9yVUWk7RimmJri4uF/DzZ9XhiCPJTJcXNyS2/51sk1SSUaKkhouLu4Rbp1KhqD1Yzw238XFxZ3h/gAb3Cn4M44gPwAAAABJRU5ErkJggg==">分享</a><div class="tags"><a href="/tags/kafka/">kafka</a></div><div class="post-nav"><a class="next" href="/HDFS高可用性介绍.html">HDFS高可用性介绍</a></div><div id="lv-container" data-id="city" data-uid="MTAyMC8zNTcwNy8xMjI0Mw=="><script>(function(d, s) {
+   var j, e = d.getElementsByTagName(s)[0];
+   if (typeof LivereTower === 'function') { return; }
+   j = d.createElement(s);
+   j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+   j.async = true;
+   e.parentNode.insertBefore(j, e);
+})(document, 'script');
+</script></div></div></div></div><div class="pure-u-1 pure-u-md-1-4"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/往事随风/">往事随风</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术人生/">技术人生</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/hadoop/" style="font-size: 15px;">hadoop</a> <a href="/tags/kafka/" style="font-size: 15px;">kafka</a> <a href="/tags/随笔/" style="font-size: 15px;">随笔</a> <a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a> <a href="/tags/IO/" style="font-size: 15px;">IO</a> <a href="/tags/NIO/" style="font-size: 15px;">NIO</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/Kafka介绍.html">Kafka介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/HDFS高可用性介绍.html">HDFS高可用性介绍</a></li><li class="post-list-item"><a class="post-list-link" href="/NameNode主备切换.html">NameNode主备切换</a></li><li class="post-list-item"><a class="post-list-link" href="/新梦想.html">新梦想</a></li><li class="post-list-item"><a class="post-list-link" href="/简聊JAVA-NIO.html">简聊JAVA NIO</a></li><li class="post-list-item"><a class="post-list-link" href="/给过去的一封信.html">给过去的一封信</a></li><li class="post-list-item"><a class="post-list-link" href="/遇见美丽.html">遇见美丽</a></li><li class="post-list-item"><a class="post-list-link" href="/向左乐观,向右悲观.html">向左乐观,向右悲观</a></li><li class="post-list-item"><a class="post-list-link" href="/排序算法总结.html">排序算法总结</a></li><li class="post-list-item"><a class="post-list-link" href="/人生传.html">人生传</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="https://tech.meituan.com" title="美团点评技术团队博客" target="_blank">美团点评技术团队博客</a><ul></ul><a href="http://jm.taobao.org" title="阿里中间件团队博客" target="_blank">阿里中间件团队博客</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">boren's blog.</a> Hosted by<a rel="nofollow" target="_blank" href="https://coding.net/pages"> Coding Pages.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.2.5/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.2.5/jquery.fancybox.min.css"><script type="text/javascript" src="/js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+   search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
