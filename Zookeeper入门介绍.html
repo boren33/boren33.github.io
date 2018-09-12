@@ -27,7 +27,7 @@
 <li>dataLength：这个节点的数据长度。</li>
 <li>numChildren：这个节点的子节点个数。</li>
 </ul>
-<h2><span id="zookeeper-会话">Zookeeper 会话</span></h2><p>客户端通过binding API创建一个到service的处理器，从而创建会话，一旦创建了，处理器会启动，会话处于connecting状态，然后客户端会尝试与leader建立连接，建立连接后，变为connected状态。此时如果一个错误发生（如会话过期、认证失败）或者是应用程序要求关闭处理器，则会转为close状态。下图展示了zookeeper可能出现的状态转换。</p>
+<h2><span id="zookeeper-会话">Zookeeper 会话</span></h2><p>客户端通过binding API创建一个到service的处理器，从而创建会话，一旦创建了，处理器会启动，会话处于connecting状态，然后客户端会尝试与server建立连接，建立连接后，变为connected状态。此时如果一个错误发生（如会话过期、认证失败）或者是应用程序要求关闭处理器，则会转为close状态。下图展示了zookeeper可能出现的状态转换。</p>
 <p><img src="http://peknp8v13.bkt.clouddn.com/image/zookeeper/zk_state.png" alt="Zookeeper状态转换图"></p>
 <h2><span id="zookeeper-监听通知机制">Zookeeper 监听（通知机制）</span></h2><p>zookeeper支持监听的概念，客户端可以在一个znode上设置监听，当znode改变时，监听将会被触发或者移除。当监听被触发时，客户端会收到一个提示数据发生变更的包，当客户端和某个zk server的连接中断时，客户端将会收到一个本地通知。</p>
 <p><strong>注意事项</strong></p>
@@ -53,7 +53,7 @@
 </ul>
 <h2><span id="zookeeper-读写操作">Zookeeper 读写操作</span></h2><p>下图展示了zookeeper服务中比较上层的组件，除了请求处理器的异常情况之外.  组成zookeeper服务的每一台zookeeper server都保存着它每个组件的副本.</p>
 <p><img src="http://peknp8v13.bkt.clouddn.com/image/zookeeper/zkcomponents.jpg" alt="zkcomponents"></p>
-<p>备份数据库是一个内存数据库，保存了个整个结构树的数据，更新操作会被保存到磁盘，用于异常修复。在写操作被应用到内存数据库前，zk会先把写操作序列化到磁盘。在zookeeper中，leader为多个客户端提供服务，客户端只会连接到leader-server来提交请求，读请求会直接读本地的备份数据库，而改变服务状态的请求、写请求则是通过一致性协议来处理。</p>
+<p>备份数据库是一个内存数据库，保存了个整个结构树的数据，更新操作会被保存到磁盘，用于异常修复。在写操作被应用到内存数据库前，zk会先把写操作序列化到磁盘。在zookeeper中，server为多个客户端提供服务，客户端会连接到一个server来提交请求，读请求会直接读本地的备份数据库，而改变服务状态的请求、写请求则是通过一致性协议来处理。</p>
 <p>一致性协议规定：所有的写操作都会被转发到leader，followers则接受来自leader的消息建议并统一消息传输。消息传输层只关注leader故障-替换和同步数据。</p>
 <p>zookeepr使用了自定义的原子协议。由于消息层是原子性的，Zookeeper可以保证本地server的本地副本不会数据错乱。当leader server收到写请求后，它会计算写入数据后的系统状态，并把获取到新状态转化为事务</p>
 <h2><span id="zookeeper-能提供什么">Zookeeper 能提供什么</span></h2><h4><span id="命名服务name-service">命名服务Name Service</span></h4><p>在zookeeper中创建一个节点，即有唯一的path。在我们无法确定上游程序的部署机器时即可与下游程序约定好path。</p>
@@ -76,7 +76,7 @@
 <li><a href="https://zookeeper.apache.org/doc/current/zookeeperOver.html" target="_blank" rel="noopener">https://zookeeper.apache.org/doc/current/zookeeperOver.html</a></li>
 <li><a href="https://zookeeper.apache.org/doc/current/zookeeperProgrammers.html" target="_blank" rel="noopener">https://zookeeper.apache.org/doc/current/zookeeperProgrammers.html</a></li>
 </ol>
-</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a class="article-share-link" data-url="http://www.boren33.com/Zookeeper入门介绍.html" data-id="cjlys1dop000593v2jhy3rpp3" data-qrcode="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJklEQVR42u3aS3KEMAwFwLn/pckBEoYnCVKF3V5RGYJpFirr8/nE6/i1zu75fn12/+9dPk8sDAyM1zKOr+tsg7Nfz14uuf6+78WnxMDA2IBRDaDfXzcPo/nHutgLAwMDoxgcE3B1XwwMDIzJ45LkMw/TGBgYGJMkdpJwPnEnBgbGPoy86v7/14/0NzAwMF7FOIrrrr7h5B3+2AUDA2NpRh7gqgey/NWjBDV5AgYGxqKMasqaj1b0Pk3+NAwMjH0YeeKaj1z0GgPJ35uJLgYGxhKMvAGQtyp7xbteWxQDA2NnRj5aUS2oTRoDp3diYGBsw8g3ngfTJEzfcJLFwMBYgjEZv+g1OycjHTcjMTAwXsKoNgbyR987fhoNW2BgYGzAqCax1WbnpGx38b8YGBhbMpKN8/JZHqCrzVQMDIy1GfnIV94M6I1ojBoGGBgYSzMmyefRWr1GQqFeiIGBsTSjl9CWi2JB2O0NfGBgYKzNyA9qzUJY63BZ/ogYGBjbMKrFtUmJrZfuXhTdMDAwlmb0im6Toa48uEdPxsDA2IYx2TL5BHmi+/hYGAYGxksYd5X1e0e6HFnoxGJgYCzHyFd1CCNPXCdHzDIMAwPjtYx8tCIp0PfK+r2Ai4GBsRujF/gmKWvv2HdRbsPAwMBoNRJ6hf5yKMfAwMBotSTz0l4eZE9JGBgYGzCSo1v1kNdrMFQ/BAYGxg6MSeqYFM56x8TqW2FgYCzK+AHKpwPxM0hWmgAAAABJRU5ErkJggg==">分享</a><div class="tags"><a href="/tags/Zookeeper/">Zookeeper</a></div><div class="post-nav"><a class="next" href="/Kafka介绍.html">Kafka介绍</a></div><div id="lv-container" data-id="city" data-uid="MTAyMC8zNTcwNy8xMjI0Mw=="><script>(function(d, s) {
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a class="article-share-link" data-url="http://www.boren33.com/Zookeeper入门介绍.html" data-id="cjlz9emrd0005kgv2zud6rcya" data-qrcode="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJklEQVR42u3aS3KEMAwFwLn/pckBEoYnCVKF3V5RGYJpFirr8/nE6/i1zu75fn12/+9dPk8sDAyM1zKOr+tsg7Nfz14uuf6+78WnxMDA2IBRDaDfXzcPo/nHutgLAwMDoxgcE3B1XwwMDIzJ45LkMw/TGBgYGJMkdpJwPnEnBgbGPoy86v7/14/0NzAwMF7FOIrrrr7h5B3+2AUDA2NpRh7gqgey/NWjBDV5AgYGxqKMasqaj1b0Pk3+NAwMjH0YeeKaj1z0GgPJ35uJLgYGxhKMvAGQtyp7xbteWxQDA2NnRj5aUS2oTRoDp3diYGBsw8g3ngfTJEzfcJLFwMBYgjEZv+g1OycjHTcjMTAwXsKoNgbyR987fhoNW2BgYGzAqCax1WbnpGx38b8YGBhbMpKN8/JZHqCrzVQMDIy1GfnIV94M6I1ojBoGGBgYSzMmyefRWr1GQqFeiIGBsTSjl9CWi2JB2O0NfGBgYKzNyA9qzUJY63BZ/ogYGBjbMKrFtUmJrZfuXhTdMDAwlmb0im6Toa48uEdPxsDA2IYx2TL5BHmi+/hYGAYGxksYd5X1e0e6HFnoxGJgYCzHyFd1CCNPXCdHzDIMAwPjtYx8tCIp0PfK+r2Ai4GBsRujF/gmKWvv2HdRbsPAwMBoNRJ6hf5yKMfAwMBotSTz0l4eZE9JGBgYGzCSo1v1kNdrMFQ/BAYGxg6MSeqYFM56x8TqW2FgYCzK+AHKpwPxM0hWmgAAAABJRU5ErkJggg==">分享</a><div class="tags"><a href="/tags/Zookeeper/">Zookeeper</a></div><div class="post-nav"><a class="next" href="/Kafka介绍.html">Kafka介绍</a></div><div id="lv-container" data-id="city" data-uid="MTAyMC8zNTcwNy8xMjI0Mw=="><script>(function(d, s) {
    var j, e = d.getElementsByTagName(s)[0];
    if (typeof LivereTower === 'function') { return; }
    j = d.createElement(s);
